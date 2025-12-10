@@ -1,0 +1,14 @@
+# Generated Rust files
+target/
+
+# Generated Python files
+__pycache__/
+*.py[cod]
+*.pyc
+*.pypirc
+
+# virtual environment
+.venv/
+
+# Data source
+*.txt
