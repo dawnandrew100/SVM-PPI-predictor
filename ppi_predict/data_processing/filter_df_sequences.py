@@ -10,6 +10,8 @@ def main():
     first_item = next(iter(sequence_dict.items()))
     print(first_item)
     print(df.describe())
+    print("\nClassification split before filtering")
+    print(f"{df["has_physical_association"].value_counts(normalize=True)}\n")
 
     filtered_df = df[
         (df["Uniprot IDs Interactor A"].isin(sequence_dict.keys()))
@@ -17,6 +19,8 @@ def main():
     ]
 
     print(filtered_df.describe())
+    print("\nClassification split after filtering")
+    print(filtered_df["has_physical_association"].value_counts(normalize=True))
     filtered_df.to_csv("../../data/filtered.csv", index=False)
 
 

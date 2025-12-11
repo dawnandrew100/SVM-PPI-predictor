@@ -4,6 +4,7 @@ import re
 
 def main():
     raw_df = pd.read_csv("../../data/BIOGRID-ALL-5.0.250.mitab.txt", sep="\t")
+    print(raw_df.describe())
     print(raw_df["Interaction Types"].value_counts())
     params = ["Alt IDs Interactor A", "Alt IDs Interactor B"]
     id_dict = generate_uniprot_id_dict(raw_df, params, "Interaction Types")
@@ -14,13 +15,13 @@ def main():
             "Alt IDs Interactor B": "Uniprot IDs Interactor B",
         }
     )
-    df_processed["is_physical_association"] = df_processed["Interaction Types"].apply(
+    df_processed["has_physical_association"] = df_processed["Interaction Types"].apply(
         lambda x: True if x == "physical association" else False
     )
     print(df_processed.head())
     print(df_processed.describe())
     print(df_processed["Interaction Types"].value_counts())
-    print(df_processed["is_physical_association"].value_counts())
+    print(df_processed["has_physical_association"].value_counts())
 
     df_processed.to_csv("../../data/processed.csv", index=False)
 
