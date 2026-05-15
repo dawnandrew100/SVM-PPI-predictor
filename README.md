@@ -4,10 +4,10 @@ Final Project for BINF 760
 
 ## Running Scripts
 
-Python scripts can be run using `uv run <file name>.py` from the same directory of
+Python scripts can be run using the `uv run <file name>.py` command from the same directory of
 the file.
 
-Rust scripts can be run using `cargo run --bin <file name>` from any directory
+Rust scripts can be run using the `cargo run --bin <file name>` command from any directory
 that is within the `ppi_predict/` folder.
 
 ## Pipeline details
@@ -21,7 +21,7 @@ composed of the parsed uniprot IDs for protein A and protein B in the interactio
 2. `get_sequence.py` fetches protein sequences from the Uniprot database based
 on their accession numbers and creates a JSON file withe each element represented
 as `accession number: sequences`.
-3. `filter_df_sequences` removes rows from the dataframe that do not have an
+3. `filter_df_sequences` removes rows from the data frame that do not have an
 associated sequence from the previous step due to an error fetching the sequence.
 
 ### Feature addition
@@ -29,20 +29,20 @@ associated sequence from the previous step due to an error fetching the sequence
 4. There are two scripts for feature addition: `src/bin/calc_svm_params.rs` and `src/bin/calc_paper_params.rs`.
 The former is a simplified version of the latter. In both versions, the amino acid sequences
 of all the proteins are pulled and converted into a triplet representation. The original alphabet
-is further broken down into six groups roughly divided into shared characteristics (eg non-polar vs polar).
-This allowed the alphabet to shrink from 20 to 6. These categories were converted to a numerical representation
+is further broken down into six groups roughly divided by shared characteristics (eg non-polar vs polar).
+This allows the alphabet to shrink from 20 to 6. These categories are converted to a numerical representation
 of 0 - 5 in order to make later computations easier. The triplet representation combined with the
-reduced alphabet allowed all sequences te be represented by a fixed vector with a length of 216.
+reduced alphabet allowed all sequences to be represented by a fixed vector with a length of 216.
 
 This vector was converted into a relative frequency vector using the below equation.
 $d_i=e^{\frac{fi-min(f1,...,f216)}{max(f1,...,f216) - min(f1,...,f216)}}-1.$
 
-The full version (`calc_paper_params.rs`) goes a step further by also calculating the NeedlemanWunsch distance
+The full version (`calc_paper_params.rs`) goes a step further by also calculating the Needleman-Wunsch distance
 for each sequence pair in order to add an additional parameter for calculation.
 
 ### Model
 
-5. The final SVM mdoel is created using the previously calculated features. The model is divided into an 80% train
+5. The final SVM model is created using the previously calculated features. The model is divided into an 80% train
 20% test split before being fit onto the X data (features) and the y data (whether a physical association
 is present or not).
 
